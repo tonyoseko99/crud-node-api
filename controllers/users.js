@@ -43,3 +43,29 @@ exports.createUser = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+// update a user
+exports.updateUser = (req, res, next) => {
+  const userId = req.params.userId;
+  const updatedName = req.body.name;
+  const updatedEmail = req.body.email;
+
+  User.findByPk(userId)
+    .then((user) => {
+      if (!user) {
+        res.status(404).json({
+          message: "User not found!",
+        });
+      }
+      user.name = updatedName;
+      user.email = updatedEmail;
+      return user.save();
+    })
+    .then((result) => {
+      res.status(200).json({
+        message: "User updated",
+        user: result,
+      });
+    })
+    .catch((err) => console.log(err));
+};
