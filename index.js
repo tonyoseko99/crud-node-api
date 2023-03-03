@@ -30,3 +30,12 @@ app.use((error, req, res, next) => {
   const message = error.message;
   res.status(status).json({ message: message });
 });
+
+// sync the database
+sequelize
+  .sync()
+  .then((result) => {
+    console.log("Database Connected!!!");
+    app.listen(3000);
+  })
+  .catch((err) => console.log(err));
