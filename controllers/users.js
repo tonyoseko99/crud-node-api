@@ -25,3 +25,21 @@ exports.getUser = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+// create a user
+exports.createUser = (req, res, next) => {
+  const name = req.body.name;
+  const email = req.body.email;
+  User.create({
+    name: name,
+    email: email,
+  })
+    .then((result) => {
+      console.log("created user successfully");
+      res.status(201).json({
+        message: "User created successfully!",
+        user: result,
+      });
+    })
+    .catch((err) => console.log(err));
+};
